@@ -229,6 +229,8 @@ func FormartSrc()
         exec "r !autopep8 -i --aggressive %"
     elseif &filetype == 'xml'
         exec "!astyle --style=gnu --suffix=none %"
+    elseif &filetype == "go"
+        exec "!gofmt -w %"
     else
         exec "normal gg=G"
         return
