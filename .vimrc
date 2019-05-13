@@ -180,6 +180,8 @@ map <F3> :NERDTreeToggle<CR>
 imap <F3> <ESC> :NERDTreeToggle<CR>
 "打开树状文件目录  
 map <C-F3> \be  
+"YoucompleteMe自动跳转
+nmap gt :YcmCompleter GoTo<cr>
 :autocmd BufRead,BufNewFile *.dot map <F5> :w<CR>:!dot -Tjpg -o %<.jpg % && eog %<.jpg  <CR><CR> && exec "redr!"
 "C，C++ 按F5编译运行
 map <F5> :call CompileRunGcc()<CR>
