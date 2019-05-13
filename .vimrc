@@ -10,24 +10,19 @@ set selection=inclusive
 set wildmenu
 set mousemodel=popup
 
-au FileType php setlocal dict+=~/.vim/dict/php_funclist.dict
-au FileType css setlocal dict+=~/.vim/dict/css.dict
 au FileType c setlocal dict+=~/.vim/dict/c.dict
 au FileType cpp setlocal dict+=~/.vim/dict/cpp.dict
-au FileType scale setlocal dict+=~/.vim/dict/scale.dict
-au FileType javascript setlocal dict+=~/.vim/dict/javascript.dict
-au FileType html setlocal dict+=~/.vim/dict/javascript.dict
-au FileType html setlocal dict+=~/.vim/dict/css.dict
 
 "
 "syntastic相关
 execute pathogen#infect()
 let g:syntastic_python_checkers=['pylint']
-let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']
+"let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']
 "golang
 "Processing... % (ctrl+c to stop)
 let g:fencview_autodetect=0
 set rtp+=$GOROOT/misc/vim
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 显示相关  
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -122,14 +117,6 @@ func SetTitle()
         call setline(1,"#!/usr/bin/env python")
         call append(line("."),"# coding=utf-8")
 	    call append(line(".")+1, "") 
-
-    elseif &filetype == 'ruby'
-        call setline(1,"#!/usr/bin/env ruby")
-        call append(line("."),"# encoding: utf-8")
-	    call append(line(".")+1, "")
-
-"    elseif &filetype == 'mkd'
-"        call setline(1,"<head><meta charset=\"UTF-8\"></head>")
 	else 
 		call setline(1, "/*************************************************************************") 
 		call append(line("."), "	> File Name: ".expand("%")) 
@@ -152,10 +139,6 @@ func SetTitle()
 		call append(line(".")+6, "#ifndef _".toupper(expand("%:r"))."_H")
 		call append(line(".")+7, "#define _".toupper(expand("%:r"))."_H")
 		call append(line(".")+8, "#endif")
-	endif
-	if &filetype == 'java'
-		call append(line(".")+6,"public class ".expand("%:r"))
-		call append(line(".")+7,"")
 	endif
 	"新建文件后，自动定位到文件末尾
 endfunc 
@@ -208,15 +191,10 @@ func! CompileRunGcc()
 	elseif &filetype == 'cpp'
 		exec "!g++ % -std=c++11 -o %<"
 		exec "!time ./%<"
-	elseif &filetype == 'java' 
-		exec "!javac %" 
-		exec "!time java %<"
 	elseif &filetype == 'sh'
 		:!time bash %
 	elseif &filetype == 'python'
 		exec "!time python2.7 %"
-    elseif &filetype == 'html'
-        exec "!firefox % &"
     elseif &filetype == 'go'
 "        exec "!go build %<"
         exec "!time go run %"
@@ -245,14 +223,8 @@ func FormartSrc()
         exec "!astyle --style=ansi -a --suffix=none %"
     elseif &filetype == 'cpp' || &filetype == 'hpp'
         exec "r !astyle --style=ansi --one-line=keep-statements -a --suffix=none %> /dev/null 2>&1"
-    elseif &filetype == 'perl'
-        exec "!astyle --style=gnu --suffix=none %"
     elseif &filetype == 'py'||&filetype == 'python'
         exec "r !autopep8 -i --aggressive %"
-    elseif &filetype == 'java'
-        exec "!astyle --style=java --suffix=none %"
-    elseif &filetype == 'jsp'
-        exec "!astyle --style=gnu --suffix=none %"
     elseif &filetype == 'xml'
         exec "!astyle --style=gnu --suffix=none %"
     else
@@ -309,9 +281,6 @@ set nobackup
 set noswapfile
 "搜索忽略大小写
 set ignorecase
-
-
-
 
 set linespace=0
 " 增强模式中的命令行自动完成操作
@@ -423,8 +392,6 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 Bundle 'Yggdroot/indentLine'
 let g:indentLine_char = '┊'
-"ndle 'tpope/vim-rails.git'
-" vim-scripts repos
 Bundle 'L9'
 Bundle 'FuzzyFinder'
 " non github repos
@@ -435,24 +402,12 @@ Bundle 'CaptureClipboard'
 Bundle 'ctrlp-modified.vim'
 Bundle 'last_edit_marker.vim'
 Bundle 'synmark.vim'
-"Bundle 'Python-mode-klen'
-Bundle 'SQLComplete.vim'
-Bundle 'Javascript-OmniCompletion-with-YUI-and-j'
-"Bundle 'JavaScript-Indent'
-"Bundle 'Better-Javascript-Indentation'
-Bundle 'jslint.vim'
-Bundle "pangloss/vim-javascript"
-Bundle 'Vim-Script-Updater'
 Bundle 'ctrlp.vim'
 Bundle 'tacahiroy/ctrlp-funky'
-Bundle 'jsbeautify'
 Bundle 'The-NERD-Commenter'
-"django
-Bundle 'django_templates.vim'
-Bundle 'Django-Projects'
+"自动补全插件
+Bundle 'Valloric/YouCompleteMe'
 
-"Bundle 'FredKSchott/CoVim'
-"Bundle 'djangojump'
 " ...
 let g:html_indent_inctags = "html,body,head,tbody"
 let g:html_indent_script1 = "inc"
